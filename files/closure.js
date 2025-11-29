@@ -1,0 +1,43 @@
+let userFn;
+{
+    const privateUser = {id:1, name:'taeyeong'};
+    userFn = ()=> privateUser; // 이 userFn 변수가 하위 스코프의 privateUser를 참조하고 있다
+}
+// block이 끝나면서 이 block의 BlockExecutionContext는 사라지지만
+// privateUser를 userFn이 계속 참조하고 있기 때문에 BlockLexicalEnvironment는 사라지지 않는다
+userFn().age =30; // 실제로는 privateUser가 변경된다
+console.log(userFn()); // {id:1, name:'taeyeong', age:30}
+
+
+
+// 비순수함수
+let count=0; // 외부변수(오염가능)
+function counter(){
+    return ++count;
+}
+console.log(counter()); //1
+console.log(counter()); //2
+count=500; // risky : 함수의 바깥쪽에 있는 변수를 외부에서 오염시킬 수 있다
+console.log(counter()); //3 -> 501
+
+
+// 순수함수 + 클로저
+function counter(){
+    let count=0;
+    return function x(){
+        return ++count;
+    }
+}
+
+const counter1=counter(); 
+// 여기서 counter1의 실행컨텍스트는 ECS에서 소멸된다
+// 그러나 function x가 function object가 존재하게 되었고 이 function x는 counter()함수의 function lexical environment를 참조하고 있다
+// 따라서 counter()함수의 function lexical environment는 소멸되지 않고 남아있게 된다
+const counter2=counter(); // 새로운 counter, 새로운 environmentRecord 생성
+// 마찬가지로 counter2도 execution context가 생서되었다가 소멸되지만
+// counter2와는 다른 function lexical environment를 갖게 된다
+// 따라서 counter1과 counter2는 각각 다른 lexical environment를 참조하게 되면서 다른 count 변수를 갖게 된다
+// 각각의 클로저가 자신만의 count 변수를 갖고 있다
+console.log(counter1()); // 1
+console.log(counter1()); // 2
+console.log(counter2()); // 1
