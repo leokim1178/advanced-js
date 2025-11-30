@@ -39,5 +39,5 @@ Object.defineProperty(user, 'id', {
 }); // TypeError: Cannot redefine property: id  
 
 Object.preventExtensions(user); // 추가, 삭제, 읽기, 쓰기, 재정의
-Object.seal(user);              // 추가, 삭제, 읽기, 쓰기, 재정의(밀봉, writable:true인 것은 변경 가능)
-Object.freeze(user);            // 추가, 삭제, 읽기, 쓰기, 재정의 (enumerable외 모두 false)
+Object.seal(user);              // (추가, 삭제)(불가능)), 읽기, 쓰기, 재정의(불가능)(밀봉, writable:true인 것은 변경 가능)
+Object.freeze(user);            // (추가, 삭제)(불가능)),  읽기, (쓰기, 재정의)(불가능) (enumerable외 모두 false)
