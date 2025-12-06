@@ -32,7 +32,7 @@ class Singleton {
         this.load();
     }
 
-    print() {  console.log('Print>>', this.name);  }
+    print() {  console.log('Print>>', this.#name);  }
 }
 
 const s1 = Singleton.getInstance();
