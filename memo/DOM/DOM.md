@@ -48,3 +48,20 @@ JSX는 JS에 XML이 붙은것
 1,2,3 번이 CPU를 많이 쓴다
 물론 요즘에는 GPU도 쓰긴한다
 4,5,6 번은 GPU를 쓴다
+
+Node
+
+- firstChild vs firstElementChild, lastChild vs lastElementChild
+- childNodes<NodeList> vs children<HTMLCollection>,
+- childElementCount, hasChildNodes()
+- nextElementSibling, nextSibling, previousElementSibling, …
+- nodeName, nodeValue, textContent, innerText, innerHtml. etc
+  Element
+- getElementById, getElementByTagName, querySelector, (get|set|remove)Attribute,
+- clientHeight, clientWidth, offsetHeight, offsetWidth, getAttribute, setAttribute
+- style.color, style.backgroundColor, …, textContent, innerText, innerHtml. etc
+  문서 조작
+- remove, appendChild(Element), append(Node|string), replaceChild, insertBefore,
+- document.create\* : TextNode, Attribute, Element, Comment, etc
+  Events
+- blur, click, dblclick, copy, cut, keydown, keyup, keypress, mouseover, mouseleave, focus, focusin, focusout, touchstart, touchmove, touchend, wheel, etc

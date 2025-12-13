@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DOM Test</title>
+  </head>
+  <body>
+    <div id="xx" class="x">XXX</div>
+    <div class="y">YYY</div>
+    <div>
+      <span id="sp" class="sp">Span 1</span>
+    </div>
+    <form id="frm" action="/submit">
+      <input type="text" id="name" onchange="nm(this)" />
+      <input
+        type="email"
+        id="email"
+        placeholder="email..."
+        onchange="chg(this)"
+      />
+      <input type="tel" id="mobile" placeholder="010-2232-2323" />
+      <input type="color" id="color" />
+      <button type="submit">Submit!</button>
+    </form>
+  </body>
+  <script src="dom.js"></script>
+</html>
