@@ -1,3 +1,5 @@
 .prompts/
 blog/
 etc/
+.idea/
+.DS_Store
