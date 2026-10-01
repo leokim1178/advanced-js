@@ -69,7 +69,7 @@ function add(a, b, c) {  // 위의 add를 덮어씀!
 }
 
 // 결과: 마지막에 정의된 함수만 존재
-add(1, 2);        // '3개 매개변수 버전', 3 (c는 undefined)
+add(1, 2);        // '3개 매개변수 버전', NaN (c가 undefined라 1+2+undefined, 2026-10 정정)
 add(1, 2, 3);     // '3개 매개변수 버전', 6
 ```
 

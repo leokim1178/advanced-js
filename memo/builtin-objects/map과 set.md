@@ -31,7 +31,7 @@ console.log([...map.keys()]); // [1, '1']
    - Map은 `map.keys()`, `map.values()`, `map.entries()` 등 이터레이터를 반환하는 메서드를 제공한다
    - Map은 그 자체로 Iterable하다
    - Object는 `Object.keys()`, `Object.values()`, `Object.entries()`를 사용해야 한다
-   - Object는 `for...of` 문으로 직접 순회할 수 없으며 `...` 연산자도 사용할 수 없다
+   - Object는 `for...of` 문으로 직접 순회할 수 없으며 배열 스프레드 `[...obj]`도 사용할 수 없다 (2026-10 정정: 객체 스프레드 `{...obj}`는 ES2018부터 된다)
 
 
 ### Set
@@ -39,17 +39,17 @@ console.log([...map.keys()]); // [1, '1']
 - 따라서 Map과 마찬가지로 해시맵으로 구현되어 있다
 - Map의 property key값을 사용하는 구조이기 때문에 중복 또한 존재할수 없다
 - 모를 수 있는 내장 함수(node 22.0 이상에서 추가)
-  - `isSubset`: 한 Set이 다른 Set의 부분집합인지 확인
+  - `isSubsetOf`: 한 Set이 다른 Set의 부분집합인지 확인 (2026-10 정정: 메서드 이름이 isSubset이 아니라 isSubsetOf)
 ```js
 const setA = new Set([1, 2]);
 const setB = new Set([1, 2, 3, 4]);
-console.log(setA.isSubset(setB)); // true
+console.log(setA.isSubsetOf(setB)); // true
 ```
-  - `isSuperset`: 한 Set이 다른 Set의 상위집합인지 확인
+  - `isSupersetOf`: 한 Set이 다른 Set의 상위집합인지 확인 (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set/isSupersetOf)
 ```js
 const setA = new Set([1, 2, 3, 4]);
 const setB = new Set([1, 2]);
-console.log(setA.isSuperset(setB)); // true
+console.log(setA.isSupersetOf(setB)); // true
 ```
   - `union`: 두 Set의 합집합을 반환
 ```js
@@ -97,7 +97,7 @@ console.log(setA.isDisjoint(setB)); // true
 - WeakMap과 WeakSet은 Map과 Set의 변형으로, 키나 값이 가비지 컬렉션의 대상이 될 수 있다
 
 ### WeakMap
-- key는 반드시 객체여야 한다 (원시값은 불가능)
+- key는 반드시 객체여야 한다 (원시값은 불가능) (2026-10 정정: ES2023부터 등록되지 않은 심볼도 키로 쓸 수 있다. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap#description)
 - **약한 참조(weak reference)**: key 객체가 다른 곳에서 참조되지 않으면 가비지 컬렉션의 대상이 된다
 - key 객체가 GC되면 해당 entry가 WeakMap에서 자동으로 제거된다
 - WeakMap은 key에 대한 약한 참조만 유지하므로, 메모리 누수를 방지할 수 있다
@@ -138,6 +138,7 @@ console.log(wm.size); // undefined
 console.log(wm.get(hong)); // undefined
 // 이제 hong과 kim 객체에 대한 참조가 사라졌으므로 가비지 컬렉션의 대상이 된다
 // WeakMap wm에서 해당 객체들에 대한 entry도 자동으로 제거된다
+// (2026-10 정정) 이 코드에서는 아니다. hong·kim에 null을 넣었을 뿐 blackList가 두 객체를 여전히 강하게 참조하므로 GC 대상이 아니다. blackList = null까지 해야 entry가 회수될 수 있다
 // 그런데 만약 Map을 사용했다면?
 let hong2={id:1, name:'홍길동'};
 let kim2={id:2, name:'김철수'};

@@ -18,8 +18,8 @@ console.log(num2 === 123); // true
 2. 몰랐던 사실들
 - `+[]` : 빈 배열을 숫자로 변환하면 0이 된다.
 - `+{}` : 빈 객체를 숫자로 변환하면 NaN이 된다.
-- `+[10]` : [10] 배열을 숫자로 변환하면 1이 된다.(이유는 배열의 첫번째 요소가 바로 주솟값이기 때문에 이를 숫자로 변환하면 1이 된다.)
-- `+[1,2]` : [1,2] 배열을 숫자로 변환하면 NaN이 된다. 이 때는 두번쨰 요소부터 어떤것을 변환해야할지 알 수 없기 때문에 NaN이 된다.
+- `+[10]` : [10] 배열을 숫자로 변환하면 10이 된다. (2026-10 정정: 처음엔 '주솟값이라 1'이라고 적었다. 배열은 toString()으로 '10'이 된 뒤 숫자로 바뀐다. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number#number_coercion)
+- `+[1,2]` : [1,2] 배열을 숫자로 변환하면 NaN이 된다. 이 때는 toString() 결과가 '1,2'라 숫자 문자열이 아니기 때문에 NaN이 된다. (2026-10 정정)
 - `+null` : null을 숫자로 변환하면 0이 된다.
 - `+true` : true를 숫자로 변환하면 1이 된다.
 - `+false` : false를 숫자로 변환하면 0이 된다.
@@ -34,7 +34,7 @@ console.log(num2 === 123); // true
 5e-7
 ```
 - `0.0000005`를 표현하면 `5e-7`로 축약된다.
-- `parseInt(0.0000005)`는 `5`를 반환한다. (버그, 주의할것)
+- `parseInt(0.0000005)`는 `5`를 반환한다. (주의할것. 2026-10 정정: 버그가 아니라 명세대로다. parseInt는 인자를 먼저 문자열 '5e-7'로 바꾸고 e에서 파싱을 멈춘다. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt#description)
 - `parseFloat(0.0000005)`는 `5e-7`를 반환한다.
 
 **https://jsisweird.com 에서 문제를 풀어보자**
@@ -59,7 +59,7 @@ console.log(num.toExponential(5)); // "1.23457e+8"
 - 형변환에 주의해야한다
 - `+'20n'`: n이 붙은 순간 BigInt가 아니고 문자열이다 따라서 숫자변환시 NaN이 된다
 - `BigInt('20') + 10n`: 30n, 
-- `BigInt(0.5)`: TypeError, 변환이 불가능하다
+- `BigInt(0.5)`: RangeError, 정수가 아니라 변환이 불가능하다 (2026-10 정정: TypeError 아님, node v24 확인)
 - `20n + 10`: TypeError
 
 5. 날짜와 시간

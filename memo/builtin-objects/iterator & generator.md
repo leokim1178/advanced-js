@@ -1,6 +1,6 @@
 ## 이터레이터
 - iterator는 커서(cursor)와 비슷하다
-- prev와 next를 갖는다
+- next를 갖는다 (2026-10 정정: prev는 없다. 프로토콜이 요구하는 건 next()뿐이고 return/throw는 선택)
 
 
 ### 이터레이터 프로토콜
@@ -18,6 +18,7 @@
 - 왜냐면 우리가 만약 1기가짜리 텍스트 파일이 있어, 그러면 그걸 한번에 다 메모리에 올릴수는 없잖아요
 - 그걸 하나씩 iterator로 옮겨야 하거든
 - 그래서 string은 기본적으로 iterator이다
+- (2026-10 정정) string은 iterator가 아니라 iterable이다. String.prototype[Symbol.iterator]가 정의돼 있어서이고, 위의 메모리 이유와는 관계없다. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols
 
 
 ### 1
@@ -136,7 +137,7 @@ function* route(){
 const router = route();
 console.log(`🚀 router : `, router);
 // 제너레이터 객체라는 것을 알수 있다
-// 첫번째 줄은 yield를 만나 halt되어있으며 next()호출을 기다리고 있다
+// (2026-10 정정) route()를 호출하면 본문은 아직 한 줄도 실행되지 않고 맨 앞에서 멈춰 있다. 첫 next()에서 첫 yield까지 실행된다
 const n1 = router.next();
 console.log(`🚀 n1 : `, n1); 
 // next() 호출로 첫번째 줄의 yield까지 도달한다
@@ -283,10 +284,11 @@ const arr = [1, "hello", {a: 1}, function() {}, null];
 4. **실제 구현**: V8 엔진은 최적화를 위해 경우에 따라 다르게 구현한다
    - 요소가 연속적이고 타입이 같으면 → **진짜 배열처럼** 최적화
    - 희소하거나 타입이 섞이면 → **해시맵(Dictionary)** 으로 구현
+   - (2026-10 정정) V8에서 타입이 섞인 배열은 PACKED_ELEMENTS, 구멍이 있는 배열은 HOLEY_* 로 여전히 fast elements다. Dictionary 모드는 arr[1000000] = 1처럼 아주 희소할 때만 간다 (node --allow-natives-syntax로 확인). https://v8.dev/blog/elements-kinds
 
 ```js
 const arr1 = [1, 2, 3, 4, 5];           // 최적화: 연속 메모리
-const arr2 = [1, "two", {}, null];      // 해시맵으로 구현
+const arr2 = [1, "two", {}, null];      // PACKED_ELEMENTS (해시맵 아님, 2026-10 정정)
 const arr3 = [];
 arr3[1000000] = 1;                       // 희소 배열: 해시맵으로 구현
 ```
@@ -317,7 +319,7 @@ const arr = [1, 2, 3, 4, 5]; // 연속적이고 타입이 같음
 const arr = [];
 arr[1000000] = 1; // 희소 배열
 // 또는
-const arr2 = [1, "two", {}, null]; // 타입이 섞임
+const arr2 = [1, "two", {}, null]; // 타입이 섞임 (이건 Dictionary 모드가 아니다, 2026-10 정정)
 ```
 - **접근 (arr[i])**: O(1) - 해시 테이블 조회 (평균)
 - **push()**: O(1) (평균)

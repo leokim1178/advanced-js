@@ -92,6 +92,8 @@ console.log(Object.getPrototypeOf(Object.getPrototypeOf(merry)) === Animal.proto
 
 객체의 property는 instance별 Environment Record에 저장된다. instance마다의 속성은 Environment Record에 저장된다. method를 비롯한 나머지들은 function Object에 저장된다.
 
+(2026-10 정정) Environment Record는 스코프의 식별자 바인딩을 담는 명세 장치라 객체 property와는 관계없다. 인스턴스 속성은 인스턴스 객체 자신에, 메서드는 Class.prototype에, static은 클래스(함수 객체)에 property로 저장된다. https://tc39.es/ecma262/#sec-environment-records
+
 특정 인스턴스에 묶이지 않는 함수를 클래스 메소드, 정적메소드라고 한다. 이걸 멤버함수라고 하는 사람도 있다.
 
 ## 객체 참조와 동일성
@@ -412,6 +414,7 @@ class BiggerTriple2 extends Triple {
 BiggerTriple2.triple();
 // 호출되지 않는 이유가 뭐지?
 // BiggerTriple2의 triple 메서드는 인스턴스 메서드이기 때문에 호출되어도 실행되지 않는다
+// (2026-10 정정) 호출은 된다. extends로 BiggerTriple2의 [[Prototype]]이 Triple이라 상속된 static Triple.triple이 실행돼 3을 반환한다. 로그가 없어 안 보였을 뿐이다. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends#description
 
 const bt2 = new BiggerTriple2();
 console.log(bt2.triple(2)); // TypeError: (intermediate value).triple is not a function
@@ -428,7 +431,7 @@ console.log(bt2.triple(2)); // TypeError: (intermediate value).triple is not a f
 
 42. 인스턴스 메서드 내에서 `super.constructor`는 부모 클래스를 가리킨다 (결과: `[class Triple]`).
 43. 인스턴스 메서드 내에서 `super.constructor.triple`은 부모 클래스의 static 메서드 triple을 가리킨다.
-44. `BiggerTriple2.triple()`을 호출해도 실행되지 않는다. `BiggerTriple2`의 `triple` 메서드는 인스턴스 메서드이기 때문이다.
+44. `BiggerTriple2.triple()`은 상속된 static `Triple.triple`을 실행해 3을 반환한다. 인스턴스 메서드 `triple`은 불리지 않는다. (2026-10 정정)
 45. 인스턴스 메서드에서 `super.triple(n)`을 호출하면 부모의 인스턴스 메서드를 찾으려 하므로, 부모에 static 메서드만 있으면 TypeError가 발생한다.
 
 ### 정리
