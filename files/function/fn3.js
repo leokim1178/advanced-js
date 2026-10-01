@@ -31,11 +31,11 @@ const newArrowFn = arrowFn.bind({
     name : "kim_dooyeong"
 })('new afn');
 // 1. 화살표 함수는 자신만의 `this`를 갖지 않고, 상위 스코프의 `this`를 그대로 물려받는다.
-//    (여기서는 전역 스코프의 `this`인 `window` 또는 `global` 객체)
+//    (2026-10 정정) Node CJS에서는 module.exports({}), 브라우저 클래식 스크립트에서는 window, ESM에서는 undefined
 // 2. `bind` 메서드를 호출해도 화살표 함수의 `this`는 바뀌지 않는다. `this` 바인딩이 무시된다.
 // 3. 함수 내부에서,
-//    - `this`는 여전히 전역 객체를 가리킨다.
-//    - `this.name = name;` 코드는 전역 객체의 `name` 프로퍼티를 'new afn'으로 설정한다.
+//    - `this`는 여전히 바깥 this(Node CJS면 module.exports)를 가리킨다.
+//    - `this.name = name;` 코드는 그 객체의 `name` 프로퍼티를 'new afn'으로 설정한다.
 //    - `new.target`은 화살표 함수가 생성자가 될 수 없으므로 항상 `undefined`이다.
-//    - 최종적으로 전역 객체가 콘솔에 출력된다.
+//    - 최종적으로 Node CJS에서는 { name: 'new afn' }이 출력된다.
 

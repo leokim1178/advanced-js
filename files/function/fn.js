@@ -32,7 +32,9 @@ const af = ()=>{
 af(1,2,3);
 
 // node에서는 아래와 같이 찍힌다
-// 이유는  arguments 객체와 new.target이 전역 객체에 바인딩 되기 때문
+// (2026-10 정정) 전역 객체가 아니다. 화살표 함수는 자기 arguments·new.target이 없어 바깥 함수의 것을 쓰는데,
+// CJS에서 바깥 함수는 모듈 래퍼 (exports, require, module, __filename, __dirname)라 그 다섯 인자가 찍힌다
+// 출처: https://nodejs.org/api/modules.html ("The module wrapper" 절)
 
 // af.name: af
 // af.length: 0

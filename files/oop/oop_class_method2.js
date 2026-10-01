@@ -70,7 +70,8 @@ class BiggerTriple2 extends Triple {
 }
 BiggerTriple2.triple();
 // 호출되지 않는 이유가 뭐지?
-// BiggerTriple2의 triple 메서드는 인스턴스 메서드이기 때문에 호출되어도 실행되지 않는다
+// (2026-10 정정) 호출은 된다. BiggerTriple2의 [[Prototype]]이 Triple이라 상속된 static Triple.triple이 실행돼 3을 반환한다.
+// 그 함수에 console.log가 없어서 아무것도 안 찍혔을 뿐이다. 출처: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static
 
 const bt2 = new BiggerTriple2();
 console.log(bt2.triple(2)); // TypeError: (intermediate value).triple is not a function

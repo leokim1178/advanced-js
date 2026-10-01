@@ -15,7 +15,8 @@ function* route(){
 const router = route();
 console.log(`🚀 router : `, router);
 // 제너레이터 객체라는 것을 알수 있다
-// 첫번째 줄은 yield를 만나 halt되어있으며 next()호출을 기다리고 있다
+// (2026-10 정정) route()를 호출하면 제너레이터 객체만 만들어지고 본문은 아직 한 줄도 실행되지 않는다(시작 지점에서 정지)
+// 첫 next()에서 첫 yield까지 실행된다. 출처: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator
 const n1 = router.next();
 console.log(`🚀 n1 : `, n1); 
 // next() 호출로 첫번째 줄의 yield까지 도달한다

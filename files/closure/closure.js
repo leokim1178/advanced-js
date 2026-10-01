@@ -19,6 +19,9 @@ console.log(counter()); //1
 console.log(counter()); //2
 count=500; // risky : 함수의 바깥쪽에 있는 변수를 외부에서 오염시킬 수 있다
 console.log(counter()); //3 -> 501
+// (2026-10 정정) 실제로는 1, 2, 501이 아니라 [Function: x]가 세 번 찍힌다.
+// 아래에 같은 이름의 function counter()가 다시 선언돼 있어 호이스팅 때 뒤의 선언이 앞을 덮기 때문 (CJS 실행 기준, ESM에서는 중복 선언 SyntaxError)
+// 의도대로 보려면 둘 중 하나의 이름을 바꾼다. 출처: https://tc39.es/ecma262/#sec-functiondeclarationinstantiation
 
 
 // 순수함수 + 클로저

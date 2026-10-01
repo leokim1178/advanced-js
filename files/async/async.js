@@ -7,6 +7,8 @@ console.log("START");
 // Background + Scheduler로 이동
 // 콜백은 API Container에 저장
 // 타이머는 OS 커널에 부탁해놓는다 (nextTickQueue)
+// (2026-10 정정) Node에서 타이머는 libuv가 관리하고, 만료된 콜백은 이벤트 루프의 timers 단계에서 실행된다.
+// nextTickQueue는 process.nextTick 전용 큐라 타이머와 무관하다. 출처: https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick
 // 5. 1000ms 이후에 cb가 저장되어있는 API Container에 interrupt를 건다
 // 저장되어있는 cb이 Task Queue로 이동
 // 이제 이벤트 루프는 콜스택이 비어있는지 확인

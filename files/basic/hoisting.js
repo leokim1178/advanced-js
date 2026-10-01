@@ -1,5 +1,6 @@
 
-// console.log('i=',i); // undefined
+// console.log('i=',i); // (2026-10 정정) undefined가 아니라 ReferenceError: Cannot access 'i' before initialization (TDZ)
+// 출처: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#temporal_dead_zone_tdz
 let i=1; // -> let i = <not initialized yet> 
 console.log('x=',x); // undefined
 var x=1; // -> var x = undefined

@@ -14,7 +14,7 @@ function f1(x,y) {  // cf. const f1 = function(x,y) { …
     let lll = 0;   // hoisting되는 이유는 뒤에서 선언했는지 여부를 개발자에게 알려줘야 중복 선언 안함!
   }  // 평가시점에 f1 scope로 hoisting.
   function f2(t, u) { console.log(t, 'inner', xx, zz); }  // f1 평가 시 f1 상단에 <f.o>로 hoisting
-  function f2(t, u, v) { console.log(t, 'inner2', xx, zz); } // hoisting 시, 위 라인의 f2를 덮어씀!(optimaizor가 덮어쓰는 것!)
+  function f2(t, u, v) { console.log(t, 'inner2', xx, zz); } // hoisting 시, 위 라인의 f2를 덮어씀!(최적화기가 아니라 명세의 함수 선언 인스턴스화 단계에서 덮어씀 — 2026-10 정정)
   var zz = 800;
   f2('second');  // call 'nested'(파랑) & f2는 block을 가리킨다!
 }

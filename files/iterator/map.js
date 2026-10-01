@@ -12,6 +12,8 @@ console.log(wm.size); // undefined
 console.log(wm.get(hong)); // undefined
 // 이제 hong과 kim 객체에 대한 참조가 사라졌으므로 가비지 컬렉션의 대상이 된다
 // WeakMap wm에서 해당 객체들에 대한 entry도 자동으로 제거된다
+// (2026-10 정정) 이 코드에서는 아니다. 변수에 null을 넣은 것이지 배열에서 뺀 게 아니라 blackList가 두 객체를 여전히 강하게 참조한다.
+// blackList = null까지 해야 GC 대상이 되고 WeakMap entry도 회수될 수 있다. 출처: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap
 // 그런데 만약 Map을 사용했다면?
 let hong2={id:1, name:'홍길동'};
 let kim2={id:2, name:'김철수'};

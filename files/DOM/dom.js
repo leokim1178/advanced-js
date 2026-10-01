@@ -9,7 +9,8 @@ body.append("Append Text"); // body 맨 끝에 텍스트 추가
 const element = document.createElement("strong");
 element.innerHTML = "<p><i>Italic Text</i></p>";
 
-body.appendChild(element); // body의 첫 번째 자식을 맨 끝으로 이동
+body.appendChild(element); // (2026-10 정정) 새로 만든 element를 body의 마지막 자식으로 붙인다
+// (이미 문서에 있는 노드를 넘기면 그 노드가 맨 끝으로 이동한다) 출처: https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild
 
 const yyy = document.getElementsByClassName("y");
 

@@ -17,5 +17,6 @@ const hasExecuteAuth = (auth & E)
 const hasReadAndExecuteAuth = (auth & (R|E))
 console.log(hasWriteAUth); // 2 (true)
 console.log(hasExecuteAuth); // 0 (false)
-console.log(hasReadAndExecuteAuth); // 1 (false)
+console.log(hasReadAndExecuteAuth); // 1 (2026-10 정정) truthy다. auth & (R|E)는 R·E 중 하나라도 있는지를 본다
+// 둘 다 있는지 보려면 (auth & (R|E)) === (R|E)로 비교해야 한다 (여기서는 R만 있어 false)
 auth = auth ^ E; // 권한 추가

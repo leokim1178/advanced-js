@@ -28,7 +28,7 @@ console.log('Set:', s);
   console.log('obj1:', obj1);
   console.log('WeakSet has obj1 (null):', ws.has(obj1));
   console.log('Set has obj1 (null):', s.has(obj1)); // Set은 원래 객체를 여전히 참조
-} // 블록 종료: obj1, obj2는 스코프 밖, WeakSet의 객체들은 GC 대상
+} // 블록 종료: obj1, obj2는 스코프 밖 (2026-10 정정) 하지만 Set s가 강하게 참조하므로 WeakSet의 객체들도 GC 대상 아님
 
 console.log('\n=== 블록 스코프 종료 후 ===');
 console.log('Set size:', s.size); // 2 (여전히 객체 참조 유지)

@@ -33,13 +33,14 @@ const obj = {
     // this의 바인딩은 일어나지 않는다
     // 왜냐, 화살표 함수는 this를 가질 수 없기 때문이다
     console.log('4️⃣  bark4 함수 -> this : ', this); 
-    // 결과 : {} (Node.js 환경에서의 전역 객체)
+    // 결과 : {} (2026-10 정정) 전역 객체가 아니라 CJS 최상위 this = module.exports
+    // 출처: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
     // 그럼 왜 innerFn처럼 전역 객체가 아닌 {}일까?
     // 화살표 함수는 자신만의 this 바인딩을 가지지 않기 때문이다
     // 따라서 상위 스코프의 this를 그대로 사용한다
     // 이 경우 상위 스코프는 파일 전체 스코프이다 (모듈 스코프)
     // 모듈 스코프에서의 this는 빈 객체 {} 이다
-  }, // bark4의 소유자(obj)의 (Lexical Environment = 전역) 의 this => globalThis
+  }, // bark4의 소유자(obj)의 (Lexical Environment = 모듈 스코프) 의 this => module.exports (CJS 기준, globalThis 아님)
 };
 
 obj.bark1(); // bark1()의 바인딩은 obj 
