@@ -29,6 +29,9 @@ close callbacks
 Other Microtasks queue
 next tick queue : 1ms의 한틱 마다 실행되는 큐(보통 js는 1ms 기준으로 tick을 돌린다)
 
+(2026-10 정정) nextTick 큐와 promise 마이크로태스크 큐는 1ms 주기로 도는 phase가 아니다. 콜백 하나(현재 작업)가 끝날 때마다 nextTick 큐 → 마이크로태스크 큐 순으로 전부 비운다(Node 11 이후). 아래 1~22 순서의 '마지막에 Other Microtasks queue 확인'도 같은 이유로 틀리다.
+출처: https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick#processnexttick
+
 위와 같은 순서로 실행된다
 
 다음과 같이 실행했다고 가정해보자
@@ -87,6 +90,8 @@ f2는 check queue에 들어간다
 10. call stack이 비어있으므로 Other Microtasks queue를 확인한다 → 없음
 11. 다시 1번으로 돌아간다
 위와 같이 setImmediate는 우선순위가 낮다
+(2026-10 정정) 메인 모듈(I/O 콜백 밖)에서 setTimeout(f, 0)과 setImmediate의 순서는 정해져 있지 않다(node v24에서 200회 돌려 3회 뒤집힘). I/O 콜백 안에서만 setImmediate가 항상 먼저다. 우선순위가 낮은 게 아니다.
+출처: https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick#setimmediate-vs-settimeout
 
 i/o가 일어날때는 조금 다르다
 ```js

@@ -30,6 +30,7 @@ function ex1(x,x){
 
 그런데 굳이 매번 이 지시자를 추가하지 않아도 된다
 Node.js 환경에서는 파일 단위로 strict mode가 기본 적용된다.
+(2026-10 정정) CommonJS 파일은 sloppy가 기본이고, ESM(.mjs 또는 "type": "module")만 strict가 기본이다. 명세상 module code는 항상 strict다. https://tc39.es/ecma262/#sec-strict-mode-code
 브라우저 환경에서는 ES6 모듈을 사용할 때 strict mode가 기본 적용된다.
 번들링할때는 babel이 trnspiling하고 webpack이 모듈을 묶어줄 때 strict mode를 자동으로 적용해준다.
 babel은 부적절한 코드는 아예 transpiling하지 않도록 막아준다.
@@ -41,6 +42,7 @@ a.map.js 라는 소스맵 파일도 생성된다
 minifying, uglifying 과정을 거치는데 이 과정이란
 변수명을 짧게 바꾸고, 공백이나 주석을 제거하여 파일 크기를 줄이는 작업이다
 ts도 마찬가지로 d.ts 라는 소스맵 파일을 생성한다.
+(2026-10 정정) .d.ts는 소스맵이 아니라 타입 선언 파일(declaration 옵션)이다. 소스맵은 sourceMap 옵션으로 만드는 .js.map이다. https://www.typescriptlang.org/tsconfig/sourceMap.html
 이런 과정에서 strict mode가 자동으로 적용된다.
 
 또 그 이전에 ESM 모듈은 strict mode가 기본 적용되기 떄문에 strict mode를 신경쓸 필요가 없다.

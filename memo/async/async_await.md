@@ -5,7 +5,7 @@ async/await
   await 은 resolve,reject를 대신한다
   yield랑 비슷하지 않아?
   next는 resolve랑 비슷하고
-  ES2020부터는 최상위 수준(전역/모듈) await 사용 가능
+  ES2022부터 모듈 최상위에서 await 사용 가능 (2026-10 정정: ES2020이 아니고, 일반 스크립트·CJS 전역에서는 안 된다. https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await#top_level_await)
 
 ### map에서의 실수
 
@@ -182,7 +182,7 @@ try {
 ```
 
 - 위에서 try...catch는 아무런 의미가 없다
-- 첫번째 then의 콜백함수는 태스크 큐에 들어간다
+- 첫번째 then의 콜백함수는 마이크로태스크 큐에 들어간다 (2026-10 정정: 태스크 큐 아님. 현재 동기 코드가 끝난 뒤 실행되므로 try 블록 밖이다)
 - 따라서 try...catch 블록에서 에러를 잡을수 있는 것은 randTime(1)에서 발생한 동기 에러 뿐이다
 - 혹은 그냥 간단하게 아래와 같이 하는게 더 좋다
 
@@ -233,4 +233,4 @@ console.timeEnd("for-await-of");
 // fo= Promise { <pending> }
 
 - 이 방법에는 전제조건이 있다
-- ES2022부터 지원되며 Top-level await 환경에서 사용하려면 모듈로 작성해야 한다
+- for await...of 자체는 ES2018이다. 이 예제처럼 함수 밖에서 쓰려면 top-level await(ES2022)가 필요하니 모듈로 작성해야 한다 (2026-10 정정)
